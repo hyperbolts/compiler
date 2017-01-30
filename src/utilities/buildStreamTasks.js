@@ -115,7 +115,7 @@ module.exports = () => {
                 }
 
                 // Return merged stream
-                return stream.merge(streamTasks.map((func) => func()));
+                return stream.merge(streamTasks.map(func => func()));
             });
         }
     }

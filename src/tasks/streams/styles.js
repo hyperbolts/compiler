@@ -1,6 +1,8 @@
 const browser     = require('browser-sync');
+const config      = require('../../config');
 const gulp        = require('gulp');
 const handleError = require('../../utilities/handleError');
+const path        = require('path');
 const sass        = require('gulp-sass');
 const sourcemaps  = require('gulp-sourcemaps');
 
@@ -14,7 +16,7 @@ const sourcemaps  = require('gulp-sourcemaps');
  * @license MIT
  */
 
-module.exports = (paths) => () => gulp.src(paths.src)
+module.exports = paths => () => gulp.src(paths.src)
 
     // Compile
     .pipe(sourcemaps.init())
@@ -23,7 +25,9 @@ module.exports = (paths) => () => gulp.src(paths.src)
     .pipe(sourcemaps.write())
 
     // Output
-    .pipe(gulp.dest(paths.dest))
+    .pipe(gulp.dest(
+        path.resolve(config.base, paths.dest)
+    ))
 
     // Reload browser
     .pipe(browser.reload({

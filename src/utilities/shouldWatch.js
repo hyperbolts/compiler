@@ -11,4 +11,4 @@
 // Determine whether we should be watching for changes. If
 // process have been run with `-w` or `--watch` we should
 // be monitoring.
-module.exports = process.argv.some((arg) => arg === '-w' || arg === '--watch');
+module.exports = process.argv.some(arg => arg === '-w' || arg === '--watch');

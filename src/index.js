@@ -20,7 +20,7 @@ const text = fs.readFileSync(
 );
 
 // Print header
-process.stdout.write(`\x1b[2m ${text} \x1b[0m`);
+process.stdout.write(`\x1b[2m${text}\x1b[0m`);
 
 // Load static tasks
 require('./tasks/bundle');

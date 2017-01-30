@@ -1,5 +1,7 @@
 const browser = require('browser-sync');
+const config  = require('../../config');
 const gulp    = require('gulp');
+const path    = require('path');
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -11,10 +13,12 @@ const gulp    = require('gulp');
  * @license MIT
  */
 
-module.exports = (paths) => () => gulp.src(paths.src)
+module.exports = paths => () => gulp.src(paths.src)
 
     // Output
-    .pipe(gulp.dest(paths.dest))
+    .pipe(gulp.dest(
+        path.resolve(config.base, paths.dest)
+    ))
 
     // Reload browser
     .pipe(browser.reload({

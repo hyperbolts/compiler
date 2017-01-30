@@ -18,7 +18,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
  * @license MIT
  */
 
-gulp.task('bundle', (cb) => {
+gulp.task('bundle', cb => {
     const loaders = ['babel-loader?{"presets":[["latest",{"loose":true}],"react"]}'];
     const plugins = [new webpack.NoErrorsPlugin()];
     const paths   = [].concat(config.bundle);
@@ -83,7 +83,7 @@ gulp.task('bundle', (cb) => {
 
         // Define output
         output: {
-            path:     process.cwd(),
+            path:     path.resolve(config.base),
             filename: '[name]'
         }
 
@@ -96,7 +96,7 @@ gulp.task('bundle', (cb) => {
         }
 
         // Set triggered flag
-        triggered = false;
+        triggered = true;
 
         // If we are watching for changes, launch browser with
         // support for hot loading

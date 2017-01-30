@@ -16,38 +16,37 @@
 // will be monitored instead.
 module.exports = {
 
-    // Base folder (removed by cleanup task and the root
-    // path served by browser when watching)
+    // Base folder
     base: 'dist',
 
     // Bundles
     bundle: {
         src:  'src/index.jsx',
-        dest: 'dist/bundle.js'
+        dest: 'bundle.js'
     },
 
     // Copy files
     copy: [
         {
-            src:  'assets/fonts/**/*.{afm,cff,eot,ffil,fon,lwfn,otf,pfb,pfm,pro,std,svg,ttf,woff,woff2,xsf}',
-            dest: 'dist/assets/fonts'
+            src:  'assets/fonts/**',
+            dest: 'assets/fonts'
         },
         {
             src:  'assets/public/**',
-            dest: 'dist'
+            dest: ''
         }
     ],
 
     // Images
     images: {
-        src:  'assets/images/**/*.{gif,ico,jpeg,jpg,png,svg}',
-        dest: 'dist/assets/images'
+        src:  'assets/images/**',
+        dest: 'assets/images'
     },
 
     // Styles
     styles: {
         watch: 'assets/styles/**/*.{sass,scss}',
         src:   'assets/styles/**/[^_]*.{sass,scss}',
-        dest:  'dist/assets/styles'
+        dest:  'assets/styles'
     }
 };
