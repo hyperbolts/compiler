@@ -22,15 +22,15 @@ const text = fs.readFileSync(
 // Print header
 process.stdout.write(`\x1b[2m ${text} \x1b[0m`);
 
-// Load tasks
+// Load static tasks
 require('./tasks/bundle');
 require('./tasks/cleanup');
-buildStreamTasks();
 
 // Export module
 module.exports = {
     run: (overrides = {}) => {
         Object.assign(config, overrides);
+        buildStreamTasks();
 
         // Create default task
         gulp.task('default', ['cleanup'], () => {
