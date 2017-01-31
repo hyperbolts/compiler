@@ -98,8 +98,8 @@ ReactDOM.render(
 ```
 
 Finally, create an index file at `assets/public/index.html` to the generated bundle:
-...
 
+```
 <!DOCTYPE html>
 <html>
     <body>
