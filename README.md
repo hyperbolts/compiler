@@ -1,7 +1,7 @@
 # HyperBolts Compiler
 **Part of the [HyperBolts](https://hyperbolts.io) family, developed by [Pace IT](https://www.paceit.co.uk). Contact us for bespoke development, consultancy and commercial support options.**
 
-**Looking for a new role working cutting edge tools and technologies? [We're hiring!](https://www.paceit.co.uk/contact/developer-jobs)**
+**Looking for a new role working with cutting edge tools and technologies? [We're hiring!](https://www.paceit.co.uk/contact/developer-jobs)**
 
 ## Summary
 The HyperBolts compiler is an opinionated JavaScript bundler, asset compiler and watcher with built-in support for React hot loading. It provides a robust development environment for React projects, with out of the box support including:
