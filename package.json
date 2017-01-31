@@ -19,7 +19,12 @@
     "react",
     "hot-loading",
     "hot-loader",
+    "hot",
+    "loader",
+    "loading",
     "webpack",
+    "browsersync",
+    "babel",
     "gulp",
     "sass"
   ],

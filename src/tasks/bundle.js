@@ -120,14 +120,6 @@ gulp.task('bundle', cb => {
                         // path. This allows react to take over and
                         // render the correct page client-side.
                         (request, response, next) => {
-
-                            // If request contains a period, we are
-                            // being asked for a file
-                            if (request.url.indexOf('.') !== -1) {
-                                return next();
-                            }
-
-                            // Parse file path
                             const file = `${process.cwd()}'/'${config.base}${request.url}`;
 
                             // If a matching file or folder does not
