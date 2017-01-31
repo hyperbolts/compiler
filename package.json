@@ -1,6 +1,6 @@
 {
   "name": "hyperbolts-compiler",
-  "desciption": "Opinionated bundler, asset compiler and watcher with React hot-loading",
+  "description": "Opinionated bundler, asset compiler and watcher with React hot-loading",
   "homepage": "https://hyperbolts.io",
   "version": "0.0.12",
   "license": "MIT",
