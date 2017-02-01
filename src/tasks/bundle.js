@@ -4,6 +4,7 @@ const fs                   = require('fs');
 const gulp                 = require('gulp');
 const path                 = require('path');
 const shouldWatch          = require('../utilities/shouldWatch');
+const url                  = require('url');
 const webpack              = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -120,7 +121,8 @@ gulp.task('bundle', cb => {
                         // path. This allows react to take over and
                         // render the correct page client-side.
                         (request, response, next) => {
-                            const file = `${process.cwd()}'/'${config.base}${request.url}`;
+                            const parsed = url.parse(request.url);
+                            const file   = `${process.cwd()}/${config.base}${parsed.pathname}`;
 
                             // If a matching file or folder does not
                             // exist, use root index file
