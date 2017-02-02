@@ -79,7 +79,7 @@ require('hyperbolts-compiler').run({
 You can also pass a watch key to monitor something other than the source. See the [default config](https://github.com/hyperbolts/compiler/blob/master/src/config.js) file for more information.
 
 ## Quickstart
-Let's build a "hello world" example from scratch to show how easy it is to develop with this compiler! Once you have completed the installation steps above, instead React:
+Let's build a "hello world" example from scratch to show how easy it is to develop with this compiler! Complete the installation steps above, then install React:
 
 ```
 npm install --save react react-dom
