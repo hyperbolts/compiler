@@ -127,7 +127,7 @@ gulp.task('bundle', cb => {
                             // If a matching file or folder does not
                             // exist, use root index file
                             if (fs.existsSync(file) === false) {
-                                request.url = '/';
+                                request.url = '/index.html';
                             }
 
                             return next();
