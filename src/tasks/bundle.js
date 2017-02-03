@@ -20,7 +20,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
  */
 
 gulp.task('bundle', cb => {
-    const loaders = ['babel-loader?{"presets":[["latest",{"loose":true}],"react"]}'];
+    const loaders = ['babel-loader?{"presets":["latest","react"]}'];
     const plugins = [new webpack.NoErrorsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
