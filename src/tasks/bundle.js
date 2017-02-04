@@ -47,7 +47,7 @@ gulp.task('bundle', cb => {
 
         // Add additional loaders
         loaders.push('webpack-module-hot-accept');
-        loaders.unshift('react-hot');
+        loaders.unshift('react-hot-loader');
 
         // Add hot replacement plugin
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -58,10 +58,7 @@ gulp.task('bundle', cb => {
     // should be handled by another process that also
     // minifies CSS etc.
     else {
-        plugins.push(
-            new webpack.optimize.OccurrenceOrderPlugin(true),
-            new webpack.optimize.DedupePlugin()
-        );
+        plugins.push(new webpack.optimize.DedupePlugin());
     }
 
     // Create bundler instance
