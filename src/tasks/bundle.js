@@ -21,7 +21,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 
 gulp.task('bundle', cb => {
     const loaders = ['babel-loader?{"presets":[["latest",{"modules":false}],"react"]}'];
-    const plugins = [new webpack.NoErrorsPlugin()];
+    const plugins = [new webpack.NoEmitOnErrorsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
     let triggered = false;
@@ -51,14 +51,6 @@ gulp.task('bundle', cb => {
 
         // Add hot replacement plugin
         plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
-
-    // If we aren't watching for changes, add additional
-    // plugins to optimize code. Not minifying here as this
-    // should be handled by another process that also
-    // minifies CSS etc.
-    else {
-        plugins.push(new webpack.optimize.DedupePlugin());
     }
 
     // Create bundler instance
