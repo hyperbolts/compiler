@@ -88,8 +88,6 @@ module.exports = () => {
                     // has finished. Did attempt to use awaitWriteFinish
                     // but wasn't consistent.
                     chokidar.watch(value.watch || value.src)
-
-                        // eslint-disable-next-line no-loop-func
                         .on('all', () => setTimeout(() => {
 
                             // Set stream array position (so the main task
