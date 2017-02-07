@@ -2,7 +2,6 @@ const browser     = require('browser-sync');
 const config      = require('../../config');
 const gulp        = require('gulp');
 const handleError = require('../../utilities/handleError');
-const importer    = require('sass-module-importer');
 const path        = require('path');
 const sass        = require('gulp-sass');
 const sourcemaps  = require('gulp-sourcemaps');
