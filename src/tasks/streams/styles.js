@@ -23,7 +23,7 @@ module.exports = paths => () => gulp.src(paths.src)
     .pipe(sourcemaps.init())
     .pipe(sass({
         importer: importer({
-            basedir: process.cwd()
+            basedir: path.join(process.cwd(), 'node_modules')
         })
     }))
         .on('error', handleError)
