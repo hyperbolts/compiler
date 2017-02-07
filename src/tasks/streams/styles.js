@@ -26,7 +26,7 @@ module.exports = paths => () => gulp.src(paths.src)
             path.join(process.cwd(), 'node_modules'),
             process.cwd()
         ]
-    })
+    }))
         .on('error', handleError)
     .pipe(sourcemaps.write())
 
