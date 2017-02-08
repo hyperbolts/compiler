@@ -21,7 +21,7 @@ module.exports = paths => () => gulp.src(paths.src)
     // Compile
     .pipe(sourcemaps.init())
     .pipe(sass({
-        includePaths: [
+        includePaths: paths.includePaths || [
             path.join(process.cwd(), 'node_modules'),
             process.cwd()
         ]
