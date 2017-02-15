@@ -55,7 +55,7 @@ gulp.task('bundle', cb => {
 
     // Create bundler instance
     const bundler = webpack({
-        devtool: 'inline-source-map',
+        devtool: 'eval-inline-source-map',
         watch:   shouldWatch,
         entry:   entries,
         plugins,
