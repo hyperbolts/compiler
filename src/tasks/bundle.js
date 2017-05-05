@@ -1,13 +1,14 @@
-const browser              = require('browser-sync');
-const config               = require('../config');
-const fs                   = require('fs');
-const gulp                 = require('gulp');
-const path                 = require('path');
-const shouldWatch          = require('../utilities/shouldWatch');
-const url                  = require('url');
-const webpack              = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const browser                  = require('browser-sync');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const config                   = require('../config');
+const fs                       = require('fs');
+const gulp                     = require('gulp');
+const path                     = require('path');
+const shouldWatch              = require('../utilities/shouldWatch');
+const url                      = require('url');
+const webpack                  = require('webpack');
+const webpackDevMiddleware     = require('webpack-dev-middleware');
+const webpackHotMiddleware     = require('webpack-hot-middleware');
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -21,7 +22,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 
 gulp.task('bundle', cb => {
     const loaders = ['babel-loader?{"presets":[["latest",{"modules":false}],"react"]}'];
-    const plugins = [new webpack.NoEmitOnErrorsPlugin()];
+    const plugins = [new webpack.NoEmitOnErrorsPlugin(), new CaseSensitivePathsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
     let triggered = false;
@@ -77,7 +78,7 @@ gulp.task('bundle', cb => {
             filename: '[name]'
         }
 
-    // Handle output
+        // Handle output
     }, (error, stats) => {
 
         // Skip if we have already triggered the callback
