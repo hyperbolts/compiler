@@ -1,6 +1,7 @@
 const chokidar       = require('chokidar');
 const config         = require('../config');
 const gulp           = require('gulp');
+const shouldMinify   = require('./shouldMinify');
 const shouldWatch    = require('./shouldWatch');
 const stream         = require('event-stream');
 const streamCopy     = require('../tasks/streams/copy');
@@ -40,14 +41,18 @@ module.exports = () => {
             func: streamImages
         },
         {
-            name: 'revision',
-            func: streamRevision
-        },
-        {
             name: 'styles',
             func: streamStyles
         }
     ];
+
+    // If we are minifying, add revision task
+    if (shouldMinify === true) {
+        tasks.push({
+            name: 'revision',
+            func: streamRevision
+        });
+    }
 
     // Loop through stream tasks
     for (task of tasks) {
