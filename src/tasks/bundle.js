@@ -58,7 +58,7 @@ gulp.task('bundle', cb => {
 
     // If we are minifying, add relevant plugins
     if (shouldMinify === true) {
-        
+
         // Disable sourcemap
         devtool = false;
 

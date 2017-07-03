@@ -39,7 +39,6 @@ module.exports = paths => () => {
     if (shouldMinify === false) {
         stream = stream.pipe(sourcemaps.write());
     }
-        
 
     // If we are minifying, run CSS through
     // minifier
