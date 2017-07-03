@@ -1,11 +1,12 @@
-const chokidar     = require('chokidar');
-const config       = require('../config');
-const gulp         = require('gulp');
-const shouldWatch  = require('./shouldWatch');
-const stream       = require('event-stream');
-const streamCopy   = require('../tasks/streams/copy');
-const streamImages = require('../tasks/streams/images');
-const streamStyles = require('../tasks/streams/styles');
+const chokidar       = require('chokidar');
+const config         = require('../config');
+const gulp           = require('gulp');
+const shouldWatch    = require('./shouldWatch');
+const stream         = require('event-stream');
+const streamCopy     = require('../tasks/streams/copy');
+const streamImages   = require('../tasks/streams/images');
+const streamRevision = require('../tasks/streams/revision');
+const streamStyles   = require('../tasks/streams/styles');
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -37,6 +38,10 @@ module.exports = () => {
         {
             name: 'images',
             func: streamImages
+        },
+        {
+            name: 'revision',
+            func: streamRevision
         },
         {
             name: 'styles',

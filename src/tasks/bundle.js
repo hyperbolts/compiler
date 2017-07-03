@@ -4,6 +4,7 @@ const config                   = require('../config');
 const fs                       = require('fs');
 const gulp                     = require('gulp');
 const path                     = require('path');
+const shouldMinify             = require('../utilities/shouldMinify');
 const shouldWatch              = require('../utilities/shouldWatch');
 const url                      = require('url');
 const webpack                  = require('webpack');
@@ -22,9 +23,10 @@ const webpackHotMiddleware     = require('webpack-hot-middleware');
 
 gulp.task('bundle', cb => {
     const loaders = ['babel-loader?{"presets":[["latest",{"modules":false}],"react"]}'];
-    const plugins = [new webpack.NoEmitOnErrorsPlugin(), new CaseSensitivePathsPlugin()];
+    const plugins = [new CaseSensitivePathsPlugin(), new webpack.NoEmitOnErrorsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
+    let devtool   = 'eval-inline-source-map';
     let triggered = false;
     let conf;
 
@@ -54,11 +56,32 @@ gulp.task('bundle', cb => {
         plugins.push(new webpack.HotModuleReplacementPlugin());
     }
 
+    // If we are minifying, add relevant plugins
+    if (shouldMinify === true) {
+        
+        // Disable sourcemap
+        devtool = false;
+
+        // Add plugin to define variables
+        plugins.push(new webpack.DefinePlugin({
+            'process.env.NODE_ENV': '"production"',
+            'NODE_ENV':             '"production"'
+        }));
+
+        // Add uglify plugin
+        plugins.push(new webpack.optimize.UglifyJsPlugin({
+            comments: false,
+            compress: {
+                warnings: false
+            }
+        }));
+    }
+
     // Create bundler instance
     const bundler = webpack({
-        devtool: 'eval-inline-source-map',
-        watch:   shouldWatch,
-        entry:   entries,
+        watch: shouldWatch,
+        entry: entries,
+        devtool,
         plugins,
 
         // Define rules

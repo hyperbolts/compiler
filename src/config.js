@@ -43,6 +43,12 @@ module.exports = {
         dest: 'assets/images'
     },
 
+    // Revision
+    revision: {
+        src:  'dist/**',
+        dest: ''
+    },
+
     // Styles
     styles: {
         watch: 'assets/styles/**/*.{sass,scss}',

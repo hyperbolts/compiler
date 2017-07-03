@@ -3,6 +3,8 @@ const config           = require('./config');
 const fs               = require('fs');
 const gulp             = require('gulp');
 const path             = require('path');
+const run              = require('run-sequence');
+const shouldMinify     = require('./utilities/shouldMinify');
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -29,12 +31,27 @@ require('./tasks/cleanup');
 // Export module
 module.exports = {
     run: (overrides = {}) => {
+
+        // Override config options
         Object.assign(config, overrides);
+
+        // Build stream tasks
         buildStreamTasks();
 
         // Create default task
         gulp.task('default', ['cleanup'], () => {
-            gulp.start(['copy', 'images', 'styles', 'bundle']);
+            const steps = [
+                ['copy', 'images', 'styles', 'bundle']
+            ];
+
+            // If we are minifying, add task to
+            // revision assets
+            if (shouldMinify === true) {
+                steps.push('revision');
+            }
+
+            // Run sequence
+            run(...steps);
         });
     }
 };
