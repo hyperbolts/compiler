@@ -3,7 +3,7 @@ const gulp       = require('gulp');
 const path       = require('path');
 const rev        = require('gulp-rev');
 const revDelete  = require('gulp-rev-delete-original');
-const revReplace = require('gulp-rev-replace-relative');
+const revReplace = require('gulp-rev-replace');
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
