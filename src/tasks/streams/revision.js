@@ -2,6 +2,7 @@ const config     = require('../../config');
 const gulp       = require('gulp');
 const path       = require('path');
 const rev        = require('gulp-rev');
+const revCSS     = require('gulp-rev-css-url');
 const revDelete  = require('gulp-rev-delete-original');
 const revReplace = require('gulp-rev-replace');
 
@@ -19,6 +20,7 @@ module.exports = paths => () => gulp.src(paths.src)
 
     // Revision assets
     .pipe(rev())
+    .pipe(revCSS())
     .pipe(revDelete())
     .pipe(revReplace())
 
