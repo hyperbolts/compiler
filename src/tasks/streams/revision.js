@@ -24,8 +24,8 @@ module.exports = paths => () => gulp.src(paths.src)
 
     // Revision relative paths
     .pipe(revReplace({
-        modifyUnreved: file => `..${path.substr(file.indexOf('/'))}`,
-        modifyReved:   file => `..${path.substr(file.indexOf('/'))}`
+        modifyUnreved: file => `..${file.substr(file.indexOf('/'))}`,
+        modifyReved:   file => `..${file.substr(file.indexOf('/'))}`
     }))
 
     // Output
