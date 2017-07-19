@@ -26,7 +26,7 @@ gulp.task('bundle', cb => {
     const plugins = [new CaseSensitivePathsPlugin(), new webpack.NoEmitOnErrorsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
-    let devtool   = 'eval-inline-source-map';
+    let devtool   = 'source-map';
     let triggered = false;
     let conf;
 
