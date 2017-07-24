@@ -4,6 +4,7 @@ const config                   = require('../config');
 const fs                       = require('fs');
 const gulp                     = require('gulp');
 const path                     = require('path');
+const shouldChunk              = require('../utilities/shouldChunk');
 const shouldMinify             = require('../utilities/shouldMinify');
 const shouldWatch              = require('../utilities/shouldWatch');
 const url                      = require('url');
@@ -73,6 +74,25 @@ gulp.task('bundle', cb => {
             comments: false,
             compress: {
                 warnings: false
+            }
+        }));
+    }
+
+    // If we are chunking, split node modules away from
+    // application code
+    if (shouldChunk === true) {
+        plugins.push(new webpack.optimize.CommonsChunkPlugin({
+            name:      'modules',
+            filename:  config.modules.dest,
+            minChunks: module => {
+                const {context} = module;
+
+                // Skip if we have no context
+                if (context === null) {
+                    return false;
+                }
+
+                return context.indexOf('node_modules') >= 0;
             }
         }));
     }

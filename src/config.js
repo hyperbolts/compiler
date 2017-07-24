@@ -43,6 +43,11 @@ module.exports = {
         dest: 'assets/images'
     },
 
+    // Modules
+    modules: {
+        dest: 'modules.js'
+    },
+
     // Revision
     revision: {
         src:  'dist/**',
