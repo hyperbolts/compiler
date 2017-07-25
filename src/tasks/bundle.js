@@ -81,9 +81,12 @@ gulp.task('bundle', cb => {
     // If we are chunking, split node modules away from
     // application code
     if (shouldChunk === true) {
+        const {dest} = config.modules;
+
+        // Add plugin
         plugins.push(new webpack.optimize.CommonsChunkPlugin({
-            name:      'modules',
-            filename:  config.modules.dest,
+            name:      dest,
+            filename:  dest,
             minChunks: module => {
                 const {context} = module;
 
