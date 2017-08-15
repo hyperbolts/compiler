@@ -2,7 +2,7 @@
   "name": "hyperbolts-compiler",
   "description": "Opinionated bundler, asset compiler and watcher with React hot-loading",
   "homepage": "https://hyperbolts.io",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
