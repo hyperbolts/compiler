@@ -27,7 +27,7 @@ gulp.task('bundle', cb => {
     const plugins = [new CaseSensitivePathsPlugin(), new webpack.NoEmitOnErrorsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
-    let devtool   = 'source-map';
+    let devtool   = 'cheap-source-map';
     let triggered = false;
     let conf;
 
