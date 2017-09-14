@@ -3,6 +3,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const config                   = require('../config');
 const fs                       = require('fs');
 const gulp                     = require('gulp');
+const HardSourceWebpackPlugin  = require('hard-source-webpack-plugin');
 const path                     = require('path');
 const shouldChunk              = require('../utilities/shouldChunk');
 const shouldMinify             = require('../utilities/shouldMinify');
@@ -23,13 +24,36 @@ const webpackHotMiddleware     = require('webpack-hot-middleware');
  */
 
 gulp.task('bundle', cb => {
-    const loaders = ['babel-loader?{"presets":[["latest",{"modules":false}],"react"]}'];
-    const plugins = [new CaseSensitivePathsPlugin(), new webpack.NoEmitOnErrorsPlugin()];
     const paths   = [].concat(config.bundle);
     const entries = {};
-    let devtool   = 'cheap-source-map';
     let triggered = false;
     let conf;
+
+    // Set default loaders
+    const loaders = [
+        {
+            loader:  'babel-loader',
+            options: JSON.stringify({
+                cacheDirectory: true,
+                presets:        [
+                    'react',
+                    [
+                        'latest',
+                        {
+                            modules: false
+                        }
+                    ]
+                ]
+            })
+        }
+    ];
+
+    // Set default plugins
+    const plugins = [
+        new CaseSensitivePathsPlugin(),
+        new HardSourceWebpackPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
+    ];
 
     // Build entry points
     for (conf of paths) {
@@ -55,13 +79,17 @@ gulp.task('bundle', cb => {
 
         // Add hot replacement plugin
         plugins.push(new webpack.HotModuleReplacementPlugin());
+
+        // Add source maps plugin
+        plugins.push(new webpack.SourceMapDevToolPlugin({
+            exclude:  config.modules.dest,
+            filename: '[name].map',
+            columns:  false
+        }));
     }
 
     // If we are minifying, add relevant plugins
     if (shouldMinify === true) {
-
-        // Disable sourcemap
-        devtool = false;
 
         // Add plugin to define variables
         plugins.push(new webpack.DefinePlugin({
@@ -104,7 +132,6 @@ gulp.task('bundle', cb => {
     const bundler = webpack({
         watch: shouldWatch,
         entry: entries,
-        devtool,
         plugins,
 
         // Define rules
