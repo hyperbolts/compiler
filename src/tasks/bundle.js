@@ -139,7 +139,7 @@ gulp.task('bundle', cb => {
             rules: [
                 {
                     test:    /\.(js|jsx)$/,
-                    exclude: /node_modules\/(?!hyperbolts-).*/,
+                    exclude: /node_modules[/\\](?!hyperbolts-).*/,
                     loaders
                 }
             ]
