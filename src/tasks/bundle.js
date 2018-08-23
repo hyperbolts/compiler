@@ -11,7 +11,6 @@ const shouldWatch              = require("../utilities/shouldWatch");
 const url                      = require("url");
 const webpack                  = require("webpack");
 const webpackDevMiddleware     = require("webpack-dev-middleware");
-const webpackHotMiddleware     = require("webpack-hot-middleware");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -38,12 +37,7 @@ gulp.task("bundle", cb => {
                 cacheDirectory: true,
                 presets:        [
                     "react",
-                    [
-                        "latest",
-                        {
-                            modules: false
-                        }
-                    ]
+                    "env"
                 ]
             })
         }
@@ -59,38 +53,6 @@ gulp.task("bundle", cb => {
     // Build entry points
     for (conf of paths) {
         entries[conf.dest] = [path.resolve(conf.src)];
-
-        /*
-         * If we are watching for changes, add hot loading
-         * files to entry point
-         */
-        if (shouldWatch === true) {
-            entries[conf.dest].unshift(
-                "webpack/hot/dev-server",
-                "webpack-hot-middleware/client"
-            );
-        }
-    }
-
-    /*
-     * If we are watching for changes, update config
-     * to support hot loading
-     */
-    if (shouldWatch === true) {
-
-        // Add additional loaders
-        loaders.push("webpack-module-hot-accept");
-        loaders.unshift("react-hot-loader");
-
-        // Add hot replacement plugin
-        plugins.push(new webpack.HotModuleReplacementPlugin());
-
-        // Add source maps plugin
-        plugins.push(new webpack.SourceMapDevToolPlugin({
-            exclude:  config.modules.dest,
-            filename: "[name].map",
-            columns:  false
-        }));
     }
 
     // If we are minifying, add relevant plugins
@@ -108,6 +70,15 @@ gulp.task("bundle", cb => {
             compress: {
                 warnings: false
             }
+        }));
+    }
+
+    // If we are not minifying, add source map
+    else {
+        plugins.push(new webpack.SourceMapDevToolPlugin({
+            exclude:  config.modules.dest,
+            filename: "[name].map",
+            columns:  false
         }));
     }
 
@@ -179,9 +150,6 @@ gulp.task("bundle", cb => {
                 server: {
                     baseDir:    config.base,
                     middleware: [
-
-                        // Add support for hot loading
-                        webpackHotMiddleware(bundler.compiler),
                         webpackDevMiddleware(bundler.compiler, {
                             publicPath: "/",
                             stats:      {
