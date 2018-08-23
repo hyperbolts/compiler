@@ -8,7 +8,9 @@
  * @license MIT
  */
 
-// Determine whether we should be minifying the output. If
-// process have been run with `-m` or `--minify` we should
-// be minifying.
-module.exports = process.argv.some(arg => arg === '-m' || arg === '--minify');
+/*
+ * Determine whether we should be minifying the output. If
+ * process have been run with `-m` or `--minify` we should
+ * be minifying.
+ */
+module.exports = process.argv.some(arg => arg === "-m" || arg === "--minify");

@@ -1,4 +1,4 @@
-const notify = require('gulp-notify');
+const notify = require("gulp-notify");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -21,10 +21,10 @@ module.exports = function handleError(...args) {
 
     // Send notify event
     notify.onError({
-        title:   'Hyperbolts ϟ',
-        message: '<%= error %>'
+        title:   "Hyperbolts ϟ",
+        message: "<%= error %>"
     })(...args);
 
     // Stop gulp from hanging on this task
-    this.emit('end');
+    this.emit("end");
 };

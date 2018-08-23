@@ -8,7 +8,9 @@
  * @license MIT
  */
 
-// Determine whether we should be chunking the output. If
-// process have been run with `-c` or `--chunk` we should
-// be chunking.
-module.exports = process.argv.some(arg => arg === '-c' || arg === '--chunk');
+/*
+ * Determine whether we should be chunking the output. If
+ * process have been run with `-c` or `--chunk` we should
+ * be chunking.
+ */
+module.exports = process.argv.some(arg => arg === "-c" || arg === "--chunk");

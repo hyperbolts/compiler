@@ -1,9 +1,9 @@
-const config     = require('../../config');
-const gulp       = require('gulp');
-const path       = require('path');
-const rev        = require('gulp-rev');
-const revDelete  = require('gulp-rev-delete-original');
-const revReplace = require('gulp-rev-replace');
+const config     = require("../../config");
+const gulp       = require("gulp");
+const path       = require("path");
+const rev        = require("gulp-rev");
+const revDelete  = require("gulp-rev-delete-original");
+const revReplace = require("gulp-rev-replace");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -24,11 +24,9 @@ module.exports = paths => () => gulp.src(paths.src)
 
     // Revision relative paths
     .pipe(revReplace({
-        modifyUnreved: file => `..${file.substr(file.indexOf('/'))}`,
-        modifyReved:   file => `..${file.substr(file.indexOf('/'))}`
+        modifyUnreved: file => `..${file.substr(file.indexOf("/"))}`,
+        modifyReved:   file => `..${file.substr(file.indexOf("/"))}`
     }))
 
     // Output
-    .pipe(gulp.dest(
-        path.resolve(config.base, paths.dest)
-    ));
+    .pipe(gulp.dest(path.resolve(config.base, paths.dest)));

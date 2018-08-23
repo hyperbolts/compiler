@@ -1,17 +1,17 @@
-const browser                  = require('browser-sync');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const config                   = require('../config');
-const fs                       = require('fs');
-const gulp                     = require('gulp');
-const HardSourceWebpackPlugin  = require('hard-source-webpack-plugin');
-const path                     = require('path');
-const shouldChunk              = require('../utilities/shouldChunk');
-const shouldMinify             = require('../utilities/shouldMinify');
-const shouldWatch              = require('../utilities/shouldWatch');
-const url                      = require('url');
-const webpack                  = require('webpack');
-const webpackDevMiddleware     = require('webpack-dev-middleware');
-const webpackHotMiddleware     = require('webpack-hot-middleware');
+const browser                  = require("browser-sync");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const config                   = require("../config");
+const fs                       = require("fs");
+const gulp                     = require("gulp");
+const HardSourceWebpackPlugin  = require("hard-source-webpack-plugin");
+const path                     = require("path");
+const shouldChunk              = require("../utilities/shouldChunk");
+const shouldMinify             = require("../utilities/shouldMinify");
+const shouldWatch              = require("../utilities/shouldWatch");
+const url                      = require("url");
+const webpack                  = require("webpack");
+const webpackDevMiddleware     = require("webpack-dev-middleware");
+const webpackHotMiddleware     = require("webpack-hot-middleware");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -23,7 +23,8 @@ const webpackHotMiddleware     = require('webpack-hot-middleware');
  * @license MIT
  */
 
-gulp.task('bundle', cb => {
+// eslint-disable-next-line max-lines-per-function
+gulp.task("bundle", cb => {
     const paths   = [].concat(config.bundle);
     const entries = {};
     let triggered = false;
@@ -32,13 +33,13 @@ gulp.task('bundle', cb => {
     // Set default loaders
     const loaders = [
         {
-            loader:  'babel-loader',
+            loader:  "babel-loader",
             options: JSON.stringify({
                 cacheDirectory: true,
                 presets:        [
-                    'react',
+                    "react",
                     [
-                        'latest',
+                        "latest",
                         {
                             modules: false
                         }
@@ -59,23 +60,27 @@ gulp.task('bundle', cb => {
     for (conf of paths) {
         entries[conf.dest] = [path.resolve(conf.src)];
 
-        // If we are watching for changes, add hot loading
-        // files to entry point
+        /*
+         * If we are watching for changes, add hot loading
+         * files to entry point
+         */
         if (shouldWatch === true) {
             entries[conf.dest].unshift(
-                'webpack/hot/dev-server',
-                'webpack-hot-middleware/client'
+                "webpack/hot/dev-server",
+                "webpack-hot-middleware/client"
             );
         }
     }
 
-    // If we are watching for changes, update config
-    // to support hot loading
+    /*
+     * If we are watching for changes, update config
+     * to support hot loading
+     */
     if (shouldWatch === true) {
 
         // Add additional loaders
-        loaders.push('webpack-module-hot-accept');
-        loaders.unshift('react-hot-loader');
+        loaders.push("webpack-module-hot-accept");
+        loaders.unshift("react-hot-loader");
 
         // Add hot replacement plugin
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -83,7 +88,7 @@ gulp.task('bundle', cb => {
         // Add source maps plugin
         plugins.push(new webpack.SourceMapDevToolPlugin({
             exclude:  config.modules.dest,
-            filename: '[name].map',
+            filename: "[name].map",
             columns:  false
         }));
     }
@@ -93,8 +98,8 @@ gulp.task('bundle', cb => {
 
         // Add plugin to define variables
         plugins.push(new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"',
-            'NODE_ENV':             '"production"'
+            "process.env.NODE_ENV": "\"production\"",
+            "NODE_ENV":             "\"production\""
         }));
 
         // Add uglify plugin
@@ -106,8 +111,10 @@ gulp.task('bundle', cb => {
         }));
     }
 
-    // If we are chunking, split node modules away from
-    // application code
+    /*
+     * If we are chunking, split node modules away from
+     * application code
+     */
     if (shouldChunk === true) {
         const {dest} = config.modules;
 
@@ -123,7 +130,7 @@ gulp.task('bundle', cb => {
                     return false;
                 }
 
-                return context.indexOf('node_modules') >= 0;
+                return context.indexOf("node_modules") >= 0;
             }
         }));
     }
@@ -138,8 +145,8 @@ gulp.task('bundle', cb => {
         module: {
             rules: [
                 {
-                    test:    /\.(js|jsx)$/,
-                    exclude: /node_modules[/\\](?!hyperbolts-).*/,
+                    test:    /\.(js|jsx)$/u,
+                    exclude: /node_modules[/\\](?!hyperbolts-).*/u,
                     loaders
                 }
             ]
@@ -148,10 +155,11 @@ gulp.task('bundle', cb => {
         // Define output
         output: {
             path:     path.resolve(config.base),
-            filename: '[name]'
+            filename: "[name]"
         }
 
-        // Handle output
+    // Handle output
+    // eslint-disable-next-line max-lines-per-function
     }, (error, stats) => {
 
         // Skip if we have already triggered the callback
@@ -162,8 +170,10 @@ gulp.task('bundle', cb => {
         // Set triggered flag
         triggered = true;
 
-        // If we are watching for changes, launch browser with
-        // support for hot loading
+        /*
+         * If we are watching for changes, launch browser with
+         * support for hot loading
+         */
         if (shouldWatch === true) {
             browser({
                 server: {
@@ -173,24 +183,28 @@ gulp.task('bundle', cb => {
                         // Add support for hot loading
                         webpackHotMiddleware(bundler.compiler),
                         webpackDevMiddleware(bundler.compiler, {
-                            publicPath: '/',
+                            publicPath: "/",
                             stats:      {
                                 chunks: false,
                                 colors: true
                             }
                         }),
 
-                        // Use root index file for any non-existant
-                        // path. This allows react to take over and
-                        // render the correct page client-side.
+                        /*
+                         * Use root index file for any non-existant
+                         * path. This allows react to take over and
+                         * render the correct page client-side.
+                         */
                         (request, response, next) => {
                             const parsed = url.parse(request.url);
                             const file   = `${process.cwd()}/${config.base}${parsed.pathname}`;
 
-                            // If a matching file or folder does not
-                            // exist, use root index file
+                            /*
+                             * If a matching file or folder does not
+                             * exist, use root index file
+                             */
                             if (fs.existsSync(file) === false) {
-                                request.url = '/index.html';
+                                request.url = "/index.html";
                             }
 
                             return next();

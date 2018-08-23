@@ -1,4 +1,4 @@
-const compiler = require('hyperbolts-compiler');
+const compiler = require("hyperbolts-compiler");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -12,13 +12,15 @@ const compiler = require('hyperbolts-compiler');
 
 compiler.run();
 
-// Alternatively pass in an object to be shallow-merged
-// into the default configuration. See src/config.js
-// or documentation for options.
-//
-// compiler.run({
-//     bundle: {
-//         src: 'src/index.js',
-//         dest: 'dist/bundle.js'
-//     }
-// });
+/*
+ * Alternatively pass in an object to be shallow-merged
+ * into the default configuration. See src/config.js
+ * or documentation for options.
+ *
+ * compiler.run({
+ *     bundle: {
+ *         src: 'src/index.js',
+ *         dest: 'dist/bundle.js'
+ *     }
+ * });
+ */

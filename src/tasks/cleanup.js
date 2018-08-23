@@ -1,6 +1,6 @@
-const config = require('../config');
-const gulp   = require('gulp');
-const del    = require('del');
+const config = require("../config");
+const gulp   = require("gulp");
+const del    = require("del");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -12,4 +12,4 @@ const del    = require('del');
  * @license MIT
  */
 
-gulp.task('cleanup', () => del(config.base));
+gulp.task("cleanup", () => del(config.base));

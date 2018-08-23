@@ -1,13 +1,13 @@
-const chokidar       = require('chokidar');
-const config         = require('../config');
-const gulp           = require('gulp');
-const shouldMinify   = require('./shouldMinify');
-const shouldWatch    = require('./shouldWatch');
-const stream         = require('event-stream');
-const streamCopy     = require('../tasks/streams/copy');
-const streamImages   = require('../tasks/streams/images');
-const streamRevision = require('../tasks/streams/revision');
-const streamStyles   = require('../tasks/streams/styles');
+const chokidar       = require("chokidar");
+const config         = require("../config");
+const gulp           = require("gulp");
+const shouldMinify   = require("./shouldMinify");
+const shouldWatch    = require("./shouldWatch");
+const stream         = require("event-stream");
+const streamCopy     = require("../tasks/streams/copy");
+const streamImages   = require("../tasks/streams/images");
+const streamRevision = require("../tasks/streams/revision");
+const streamStyles   = require("../tasks/streams/styles");
 
 /**
  * HyperBolts ϟ (https://hyperbolts.io)
@@ -27,21 +27,21 @@ const streamStyles   = require('../tasks/streams/styles');
  * @param  {string} file filename
  * @return {void}
  */
-module.exports = () => {
+module.exports = () => { // eslint-disable-line max-lines-per-function
     let task;
 
     // Parse stream tasks
     const tasks = [
         {
-            name: 'copy',
+            name: "copy",
             func: streamCopy
         },
         {
-            name: 'images',
+            name: "images",
             func: streamImages
         },
         {
-            name: 'styles',
+            name: "styles",
             func: streamStyles
         }
     ];
@@ -49,7 +49,7 @@ module.exports = () => {
     // If we are minifying, add revision task
     if (shouldMinify === true) {
         tasks.push({
-            name: 'revision',
+            name: "revision",
             func: streamRevision
         });
     }
@@ -61,29 +61,35 @@ module.exports = () => {
         const streamTasks = [];
         let pos, value;
 
-        // If config is not an array, life is simple! Create
-        // a standard gulp task and optionally monitor for
-        // changes.
+        /*
+         * If config is not an array, life is simple! Create
+         * a standard gulp task and optionally monitor for
+         * changes.
+         */
         if (Array.isArray(conf) === false) {
             gulp.task(task.name, task.func(conf));
 
             // Monitor for changes
             if (shouldWatch === true) {
 
-                // Using set timeout to make sure file write
-                // has finished. Did attempt to use awaitWriteFinish
-                // but wasn't consistent
+                /*
+                 * Using set timeout to make sure file write
+                 * has finished. Did attempt to use awaitWriteFinish
+                 * but wasn't consistent
+                 */
                 chokidar.watch(conf.watch || conf.src)
-                    .on('all', () => setTimeout(() => {
+                    .on("all", () => setTimeout(() => {
                         gulp.start([name]);
                     }, 100));
             }
         }
 
-        // Otherwise create a task which merges streams
-        // for each element of the config array. Start
-        // by looping and creating a task for each
-        // key.
+        /*
+         * Otherwise create a task which merges streams
+         * for each element of the config array. Start
+         * by looping and creating a task for each
+         * key.
+         */
         else {
             for (value of conf) {
                 const current = streamTasks.length;
@@ -94,15 +100,19 @@ module.exports = () => {
                 // Watch for changes
                 if (shouldWatch === true) {
 
-                    // Using set timeout to make sure file write
-                    // has finished. Did attempt to use awaitWriteFinish
-                    // but wasn't consistent.
+                    /*
+                     * Using set timeout to make sure file write
+                     * has finished. Did attempt to use awaitWriteFinish
+                     * but wasn't consistent.
+                     */
                     chokidar.watch(value.watch || value.src)
-                        .on('all', () => setTimeout(() => {
+                        .on("all", () => setTimeout(() => {
 
-                            // Set stream array position (so the main task
-                            // only processes the relevant source) then
-                            // call task
+                            /*
+                             * Set stream array position (so the main task
+                             * only processes the relevant source) then
+                             * call task
+                             */
                             pos = current;
                             gulp.start([name]);
                         }, 100));
@@ -112,9 +122,11 @@ module.exports = () => {
             // Create main task
             gulp.task(task.name, () => {
 
-                // If we have a position, we must have been
-                // called from a watch event. Only process
-                // the matching source.
+                /*
+                 * If we have a position, we must have been
+                 * called from a watch event. Only process
+                 * the matching source.
+                 */
                 if (pos !== undefined) {
                     const output = streamTasks[pos]();
 
